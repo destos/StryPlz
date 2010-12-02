@@ -19,3 +19,6 @@
 [submodule "modules/auth"]
 	path = modules/auth
 	url = git://github.com/kohana/auth.git
+[submodule "modules/twilio"]
+	path = modules/twilio
+	url = git@github.com:destos/kohana-twilio.git
