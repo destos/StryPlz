@@ -7,18 +7,9 @@
 [submodule "modules/orm"]
 	path = modules/orm
 	url = git://github.com/kohana/orm.git
-[submodule "modules/cache"]
-	path = modules/cache
-	url = git://github.com/kohana/cache.git
-[submodule "modules/userguide"]
-	path = modules/userguide
-	url = git://github.com/kohana/userguide.git
 [submodule "modules/pagination"]
 	path = modules/pagination
 	url = git://github.com/kohana/pagination.git
-[submodule "modules/auth"]
-	path = modules/auth
-	url = git://github.com/kohana/auth.git
 [submodule "modules/twilio"]
 	path = modules/twilio
 	url = git@github.com:destos/kohana-twilio.git
