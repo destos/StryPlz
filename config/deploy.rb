@@ -1,7 +1,8 @@
 # Shared directories, these directories contain generated content which should
 # not be wiped out during deployments.
 set :shared_children, %w(logs cache)
-set :application, "testvm" 
+#set :application, "testvm" 
+set :application, "stryplz.com" 
 set :application_dir, "stryplz.com" 
 set :deploy_to, "/var/www/html/#{application_dir}" #/#{stage}
 
@@ -15,8 +16,6 @@ set :scm_verbose, true
 set :branch,     "master"
 set :deploy_via, :checkout
 
-
-
 # Submodule support
 set :git_enable_submodules, true
 #set :git_recurse_submodules, true
@@ -25,7 +24,7 @@ set :git_enable_submodules, true
 set :repository, "git@github.com:destos/StryPlz.git"
 
 # Local machine
-#set :local_repository, "nolimits-website:~/repositories/nle2.git/"
+#set :local_repository, "~/Sites/stryplz.com/.git/"
 
 # SSH
 #ssh_options[:keys] = %w(/Users/pat/.ssh/id_dsa.pub)
@@ -34,22 +33,22 @@ ssh_options[:forward_agent] = true
 ssh_options[:port] = 22
 
 # Roles
-#role :web, "#{application}"
-role :app, "#{user}"
-role :web, "#{user}"
+role :web, "#{application}"
+role :app, "#{application}"
+#role :web, "#{user}"
 
 # --------------------------------------------
 # Overloaded Methods.
 # --------------------------------------------
-# namespace :deploy do
-# 	task :finalize_update do
-# 			# Create cache directory
-# 			run "mkdir #{latest_release}/application/cache"
-# 
-# 			# Symlink shared directories.
-# 			run "ln -sf #{shared_path}/logs #{latest_release}/application/logs"
-# 			run "ln -sf #{shared_path}/upload #{latest_release}/public/upload"
-# 	end
+namespace :deploy do
+	task :finalize_update do
+			# Create cache directory
+			run "chmod -R 777 #{latest_release}/app_story/cache"
+
+			# Symlink shared directories.
+			run "ln -sf #{shared_path}/logs #{latest_release}/app_story/logs"
+			run "ln -sf #{shared_path}/upload #{latest_release}/www/upload"
+	end
 # 
 # 	task :migrate do
 # 		php        = "/opt/php-5.3.3/bin/php"
@@ -58,7 +57,7 @@ role :web, "#{user}"
 # 
 # 		run "cd #{latest_release} && #{php} #{binary} --configuration=#{migrations}/conf.yml --db-configuration=#{migrations}/db.php --no-interaction migrations:migrate"
 # 	end
-# end
+end
 
 #after "deploy:update_code", "deploy:web:disable"
 #after "deploy:symlink", "deploy:web:enable"
