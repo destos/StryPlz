@@ -14,7 +14,10 @@ class Controller_Incoming extends Controller_Twilio {
 	}
 	
 	public function action_extra(){
-		
+	
+		if(!$this->post)
+			return;
+			
 		switch($this->post->Digits){
 			case 1:
 				$this->tw_response->addSay('To join in a random existing story text "join" to this number. If you wish to join an existing story text join followed by that stories ID.');
