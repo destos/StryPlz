@@ -5,13 +5,12 @@ class Controller_sms extends Controller_Twilio {
 	
 	private $config;
 	
-	public function before(){
-	
-		$this->config = Kohana::config('twilio');
-		
+	public function before(){	
 		return parent::before();
 	}
-	
+	public function action_send(){
+		$this->send_sms('8458030695','rest test',false,'(918) 791-3935');
+	}
 	// Handle all SMS messages.
 	public function action_index(){
 		
@@ -96,7 +95,7 @@ class Controller_sms extends Controller_Twilio {
 								Kohana::$log->add( Kohana::DEBUG, "Story already has a current teller {$cur_teller}" );
 							}
 							
-							$parts = $story->parts->order_by('id','ASC')->find_all();
+							$parts = $story->parts->order_by('id','DESC')->find_all();
 							
 							foreach( $parts as $part ){
 								$story_parts[] = trim($part->text);
@@ -186,16 +185,13 @@ class Controller_sms extends Controller_Twilio {
 		
 	}
 	
-	private function send_sms( $phone = false, $message = 'test', $callback = false ){
+	private function send_sms( $phone = false, $message = 'test', $callback = false, $from ){
 		
 		if(!$phone)
 			return;
 			
-		// trim message inteligently.
-		$message = TEXT::limit_chars_left( $message, 150, '&hellip;', false );
-		
 		$data = array(
-			'From' => $this->config->App_Number,
+			'From' => $from,
 			'To' => $phone,
 			'Body' => $message
 		);
@@ -214,10 +210,10 @@ class Controller_sms extends Controller_Twilio {
 		
 		Kohana::$log->add( Kohana::DEBUG, "Sending SMS : {$message} To: {$phone}" );
 		
-		$sent = $this->tw_client->request("/2010-04-01/Accounts/{$this->config->AccountSid}/SMS/Messages",'POST', $data );
+		$sent = $this->tw_client->request( "SMS/Messages", 'POST', $data );
 			
 		if( (bool) $sent->IsError){
-			Kohana::$log->add( Kohana::ERROR, "SMS :{$sent->ErrorMessage}" );
+			Kohana::$log->add( Kohana::ERROR, "SMS error :{$sent->ErrorMessage}" );
 		}
 		
 	}
