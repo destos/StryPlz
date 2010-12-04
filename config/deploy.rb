@@ -9,12 +9,14 @@ set :deploy_to, "/var/www/html/#{application_dir}" #/#{stage}
 # Commands on the server are run as the following user:
 set :user, "deploy"
 set :use_sudo, false
+#set :scm_passphrase, "OWkitXq5a8Zi"  # The deploy user's password
 
 # Repository
 set :scm,         :git
 set :scm_verbose, true
 set :branch,     "master"
-set :deploy_via, :checkout
+set :deploy_via, :remote_cache
+#set :deploy_via, :checkout
 
 # Submodule support
 set :git_enable_submodules, true
@@ -24,7 +26,7 @@ set :git_enable_submodules, true
 set :repository, "git@github.com:destos/StryPlz.git"
 
 # Local machine
-#set :local_repository, "~/Sites/stryplz.com/.git/"
+#set :local_repository, "/var/www/html/stryplz.com/.git/"
 
 # SSH
 #ssh_options[:keys] = %w(/Users/pat/.ssh/id_dsa.pub)
@@ -41,6 +43,7 @@ role :app, "#{application}"
 # Overloaded Methods.
 # --------------------------------------------
 namespace :deploy do
+
 	task :finalize_update do
 			# Create cache directory
 			run "chmod -R 777 #{latest_release}/app_story/cache"
