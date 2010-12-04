@@ -3,6 +3,11 @@
 //-- Environment setup --------------------------------------------------------
 
 /**
+ * Set the Kohana Environment based on server name
+ */
+($_SERVER['SERVER_NAME'] == 'stryplz.com') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
+
+/**
  * Set the default time zone.
  *
  * @see  http://kohanaframework.org/guide/using.configuration
@@ -16,7 +21,7 @@ date_default_timezone_set('America/Chicago');
  * @see  http://kohanaframework.org/guide/using.configuration
  * @see  http://php.net/setlocale
  */
-setlocale(LC_ALL, 'en_US.utf-8');
+setlocale(LC_ALL, 'en_US.utf-8', 'english-us');
 
 /**
  * Enable the Kohana auto-loader.
@@ -37,10 +42,32 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 //-- Configuration and initialization -----------------------------------------
 
 /**
- * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
- * 
+ * Attach a file reader to config. Multiple readers are supported.
  */
-Kohana::$environment = Kohana::DEVELOPMENT;//($_SERVER['SERVER_NAME'] !== 'twilio.forringer.com') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
+Kohana_Config::instance()->attach(new Kohana_Config_File);
+
+/**
+ * Attach the environment specific configuration file reader to config if not in production.
+ */
+if (Kohana::$environment != Kohana::PRODUCTION)
+{
+	Kohana_Config::instance()->attach(new Kohana_Config_File('config/environments/'.Kohana::$environment));
+}
+
+$apache_environment = strtolower(URL::title(@getenv('ENVIRONMENT')));
+
+if (empty($apache_environment))
+	die('You need to specify a valid ENVIRONMENT in your vhost definition');
+
+Kohana_Config::instance()->attach(new Kohana_Config_File('config/environments/apache/'.$apache_environment));
+unset($apache_environment);
+
+/**
+ * Set the session save path.
+ * @see  http://php.net/session-save-path
+ */
+#session_save_path(Kohana_Config::instance()->load('session')->save_path);
+
 /**
  * Initialize Kohana, setting the default options.
  *
@@ -54,14 +81,7 @@ Kohana::$environment = Kohana::DEVELOPMENT;//($_SERVER['SERVER_NAME'] !== 'twili
  * - boolean  profile     enable or disable internal profiling               TRUE
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
-Kohana::init(array(
-	'base_url'		=> '/',
-	'errors'			=> Kohana::$environment !== Kohana::PRODUCTION,
-  'profile'			=> Kohana::$environment !== Kohana::PRODUCTION,
-  'caching'			=> Kohana::$environment === Kohana::PRODUCTION,
-	'index_file'	=> false,
-));
-
+Kohana::init(Kohana_Config::instance()->load('init')->as_array());
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
@@ -76,22 +96,12 @@ Kohana::$config->attach(new Kohana_Config_File);
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules(array(
-	'database'		=> MODPATH.'database',		// Database access
-	'orm'					=> MODPATH.'orm',					// Object Relationship Mapping
-	'twilio'			=> MODPATH.'twilio',			//
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	
-	// 'oauth'      => MODPATH.'oauth',      // OAuth authentication
-	// 'pagination' => MODPATH.'pagination', // Paging of results
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
+Kohana::modules(Kohana::config('modules')->as_array());
 
-	));
+/**
+ * Attach the JSON Config Driver
+ */
+#Kohana::$config->attach(new Config_JSON('config.json'));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -100,6 +110,12 @@ Kohana::modules(array(
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'home',
+		'action'     => 'index',
+	));
+
+Route::set('sms', '<sms>')
+	->defaults(array(
+		'controller' => 'sms',
 		'action'     => 'index',
 	));
 
