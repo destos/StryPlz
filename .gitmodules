@@ -13,3 +13,6 @@
 [submodule "modules/twilio"]
 	path = modules/twilio
 	url = git@github.com:destos/kohana-twilio.git
+[submodule "modules/console"]
+	path = modules/console
+	url = git://github.com/daveWid/console.git

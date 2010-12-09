@@ -4,8 +4,9 @@ class Controller_Home extends Controller {
 
 	public function action_index()
 	{
-		$config = Kohana::config('twilio');
-		$this->request->response = "Start a story! Call {$config->App_Number} for info.";
+		//print_r();
+		$twilio = Twilio::instance();
+		$this->request->response = "Start a story! Call ".$twilio->$AppNumber." for info.";
 	}
 
 } // End Home

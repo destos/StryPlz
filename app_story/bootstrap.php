@@ -5,7 +5,7 @@
 /**
  * Set the Kohana Environment based on server name
  */
-($_SERVER['SERVER_NAME'] == 'stryplz.com') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
+Kohana::$environment = ($_SERVER['SERVER_NAME'] == 'stryplz.com') ? Kohana::PRODUCTION : Kohana::DEVELOPMENT;
 
 /**
  * Set the default time zone.
@@ -47,20 +47,19 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 Kohana_Config::instance()->attach(new Kohana_Config_File);
 
 /**
- * Attach the environment specific configuration file reader to config if not in production.
+ * Attach the environment specific configuration file reader
  */
-if (Kohana::$environment != Kohana::PRODUCTION)
-{
-	Kohana_Config::instance()->attach(new Kohana_Config_File('config/environments/'.Kohana::$environment));
-}
+Kohana_Config::instance()->attach(new Kohana_Config_File('config/environments/'.Kohana::$environment));
+
 
 $apache_environment = strtolower(URL::title(@getenv('ENVIRONMENT')));
 
-if (empty($apache_environment))
-	die('You need to specify a valid ENVIRONMENT in your vhost definition');
+if (!empty($apache_environment)){
 
-Kohana_Config::instance()->attach(new Kohana_Config_File('config/environments/apache/'.$apache_environment));
-unset($apache_environment);
+	Kohana_Config::instance()->attach(new Kohana_Config_File('config/environments/apache/'.$apache_environment));
+	unset($apache_environment);
+	
+}
 
 /**
  * Set the session save path.
@@ -112,12 +111,14 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'home',
 		'action'     => 'index',
 	));
+/*
 
 Route::set('sms', '<sms>')
 	->defaults(array(
 		'controller' => 'sms',
 		'action'     => 'index',
 	));
+*/
 
 /**
  * Execute the main request using PATH_INFO. If no URI source is specified,

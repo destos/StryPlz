@@ -4,6 +4,7 @@ return array(
 	'database'		=> MODPATH.'database',		// Database access
 	'orm'					=> MODPATH.'orm',					// Object Relationship Mapping
 	'twilio'			=> MODPATH.'twilio',			//
+	//'console'			=> MODPATH.'console',
 	// 'auth'       => MODPATH.'auth',       // Basic authentication
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool

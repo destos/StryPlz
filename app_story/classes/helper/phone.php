@@ -1,7 +1,8 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 
 Class Helper_Phone{
-
+	
+	//Helper_Phone::format($this->post->From);
 	public static function format($phone = '', $convert = false, $trim = true){
 	
 		// If we have not entered a phone number just return empty
