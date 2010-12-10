@@ -16,3 +16,9 @@
 [submodule "modules/console"]
 	path = modules/console
 	url = git://github.com/daveWid/console.git
+[submodule "modules/userguide"]
+	path = modules/userguide
+	url = git://github.com/kohana/userguide.git
+[submodule "modules/kostache"]
+	path = modules/kostache
+	url = git://github.com/zombor/KOstache.git
