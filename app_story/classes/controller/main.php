@@ -1,16 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Main extends Controller {
+class Controller_Main extends Controller_Layout {
 
-	public function before(){}
+	//public function before(){}
 	
 	public function action_index(){
-		
-		$twilio_number = Twilio::$AppNumber;
-		
-		$this->request->response = "Start a story! Call ".$twilio_number." for info.";
+		$this->template->title = __('Home');
+		$this->template->content = 'test';
 	}
 	
-	public function after(){}
+	//public function after(){}
 
 } // End Main

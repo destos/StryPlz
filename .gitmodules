@@ -22,3 +22,9 @@
 [submodule "modules/kostache"]
 	path = modules/kostache
 	url = git://github.com/zombor/KOstache.git
+[submodule "modules/purifier"]
+	path = modules/purifier
+	url = git://github.com/shadowhand/purifier.git
+[submodule "modules/asset"]
+	path = modules/asset
+	url = git://github.com/jonathangeiger/kohana-asset.git
