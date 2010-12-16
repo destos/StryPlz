@@ -108,7 +108,7 @@ Kohana::modules(Kohana::config('modules')->as_array());
  */
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller' => 'home',
+		'controller' => 'main',
 		'action'     => 'index',
 	));
 /*
