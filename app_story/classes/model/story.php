@@ -51,22 +51,16 @@ class Model_Story extends ORM {
 	//
 		
 	public function get_parts(){
-
-		return $this->parts->order_by('id','ASC')->find_all();
-		
-	}
-	
-	public function get_parts_text(){
 	
 		if( $this->empty_pk() )
 			return array();
-		
+					
 		if( empty($this->_story_parts) ){
 		
-			$parts = $this->get_parts();
+			$parts = $this->parts->order_by('id','ASC')->find_all();
 			
 			foreach( $parts as $part ){
-				$this->_story_parts[] = trim($part->text);
+				$this->_story_parts[] = $part;
 			}
 			
 		}
@@ -74,9 +68,9 @@ class Model_Story extends ORM {
 		return $this->_story_parts;
 		
 	}
-	
+		
 	public function full_story(){
-		return (string) implode( ' ', $this->get_parts_text() );
+		return (string) implode( ' ', $this->get_parts() );
 	}
 	
 	// Concatinate entire story when typed as string.
