@@ -416,6 +416,25 @@ body{
 }
 
 /* @end */
+
+/* @group Story */
+
+.story{
+	margin: 0 -10px;
+	padding: 9px;
+	border-top: 1px solid #d7d7d7;
+}
+
+.story a{
+	float: right;
+	margin-left: 10px;
+}
+
+.story .info-bar{
+	float: right;
+	margin-left: 20px;
+}
+
 .story p > span{
 	background-color: #fff;
 	-webkit-transition: background-color 0.2s linear;
@@ -431,3 +450,7 @@ body{
 .story p > span:hover{
 	background-color: #c7c7c7;
 }
+
+
+
+/* @end */
