@@ -8,9 +8,9 @@ class Controller_Testing extends Controller_Twilio {
 		echo '<pre>';
 		$twilio = Twilio::instance();
 		$test = array();
-		//$test['get_sandbox'] = $twilio->get_sandbox();
-		//$test['get_account'] = $twilio->get_account();
-		//$test['set_account'] = $twilio->set_account_name('Patrick\'s Twilio Account');
+		#$test['get_sandbox'] = $twilio->get_sandbox();
+		#$test['get_account'] = $twilio->get_account();
+		#$test['set_account'] = $twilio->set_account_name('Patrick\'s Twilio Account');
 		
 		print_r( $test );
 		
@@ -33,4 +33,24 @@ class Controller_Testing extends Controller_Twilio {
 		$this->auto_respond = false;
 	}
 	
+	public function action_sms(){
+	
+		Twilio::instance()->send_sms(array(
+			'To' => '+18458030695',
+			'Body' => "testing SMS" ));
+			
+	}
+	
+	public function action_story(){
+		
+		//Kohana::$log->add( Kohana::DEBUG, "Looking up a randome story for testing" );
+		
+		//$stories = ORM::factory('story')->
+		
+		//$story = ;
+		
+		echo (string) ORM::factory( 'story', 3 );
+		
+		$this->auto_respond = false;
+	}
 }

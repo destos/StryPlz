@@ -6,7 +6,16 @@ class Controller_Main extends Controller_Layout {
 	
 	public function action_index(){
 		$this->template->title = __('Home');
-		$this->template->content = 'test';
+		
+		// request stories route and send.
+		$stories_route = Route::get('stories')->uri();
+		//echo $stories_route;
+		
+		$r = Request::factory( $stories_route );
+		
+		echo $r->execute()->response;
+		
+		$this->auto_render = false;
 	}
 	
 	//public function after(){}

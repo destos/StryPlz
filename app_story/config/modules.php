@@ -7,7 +7,7 @@ return array(
 	'console'			=> MODPATH.'console',
 	'kostache'		=> MODPATH.'kostache',
 	'asset'				=> MODPATH.'asset',
-	'purifier'		=> MODPATH.'purifier',
+	//'purifier'		=> MODPATH.'purifier',
 	'pagination' => MODPATH.'pagination', // Paging of results
 	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	

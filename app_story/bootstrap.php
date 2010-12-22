@@ -119,6 +119,19 @@ Route::set('twilio-sms', 'sms(:<action>)')
 		'controller' => 'handle_sms',
 		'action'     => 'index',
 	));
+
+Route::set('story', 'story-(<id>)(<slug>)(/<extra>)', array('id' => '[\d]+', 'slug' => '[a-zA-Z0-9]+'))
+	->defaults(array(
+		'controller' => 'story',
+		'action'     => 'single',
+	));
+
+Route::set('stories', 'stories(/page:<page>)', array('page' => '[\d]+'))
+	->defaults(array(
+		'controller' => 'story',
+		'action'     => 'browse',
+	));
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'main',
@@ -158,6 +171,7 @@ catch (Exception $e) {
 	$request->response = View::factory('template')
 	->set('title', '404')
 	->set('content', View::factory('errors/404'));
+	
 }
 
 if ($request->send_headers()->response) {
