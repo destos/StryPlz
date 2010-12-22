@@ -106,6 +106,19 @@ Kohana::modules(Kohana::config('modules')->as_array());
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+ 
+//sms or call route
+Route::set('twilio-call', 'call(:<action>)')
+	->defaults(array(
+		'controller' => 'handle_call',
+		'action'     => 'index',
+	));
+	
+Route::set('twilio-sms', 'sms(:<action>)')
+	->defaults(array(
+		'controller' => 'handle_sms',
+		'action'     => 'index',
+	));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'main',

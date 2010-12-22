@@ -1,12 +1,15 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_sms extends Controller_Twilio {
+class Controller_Handle_Sms extends Controller_Twilio {
 	
 	private $teller;
 	
 	private $sms;
 	
-	public function before(){	
+	public function before(){
+	
+		$this->sms = (object) array('id' => false, 'txt' => false, 'full_txt' => false );
+		
 		return parent::before();
 	}
 		
@@ -58,9 +61,9 @@ class Controller_sms extends Controller_Twilio {
 			
 			if( method_exists( $this , $handle ) ){
 				Kohana::$log->add( Kohana::INFO, "Handling SMS with: {$handle}" );
-				call_user_method( $handle, $this );
+				call_user_func( array($this, $handle) );
 			}else{
-				call_user_method( 'handle_default', $this );
+				call_user_func( array($this, 'handle_default') );
 			}
 		
 		// not post	
@@ -74,10 +77,11 @@ class Controller_sms extends Controller_Twilio {
 	
 		$sms_turns = ( $this->sms->id ) ? $this->sms->id : 10 ; // set to 10 turns by default
 		
-		$story = $this->teller->add_story( $txt, $sms_turns, $this->post );
+		$story = $this->teller->add_story( $this->sms->txt, $sms_turns, $this->post );
 		
-		$this->send_sms( $this->teller->phone_number  , "Success! Tell your friends to txt us with 'join {$story->pk()}' to continue your story!" ); // {$sms_turns} turns
-		
+		Twilio::send_sms( array(
+			'To' => $this->teller->phone_number,
+			'Body' => "Success! Tell your friends to txt us with 'join {$story->pk()}' to continue your story! Your story has {$sms_turns} turns" ));
 	}
 	
 	private function handle_join(){
@@ -110,23 +114,20 @@ class Controller_sms extends Controller_Twilio {
 					Kohana::$log->add( Kohana::DEBUG, "Story already has a current teller {$cur_teller}" );
 				}
 				
-				$parts = $story->parts->order_by('id','DESC')->find_all();
+				//$full_story = $story->full_story();
 				
-				foreach( $parts as $part ){
-					$story_parts[] = trim($part->text);
-				}
-				
-				$story_parts = implode( ' ', $story_parts );
-				
-				$this->send_sms( $this->teller->phone_number , "{$story_parts}" );					
+				Twilio::send_sms(array(
+					'To' => $this->teller->phone_number,
+					'Body' => "{$story}" ));					
 				
 			}else{
-				$this->send_sms( $this->teller->phone_number , "couldn't find that story" );
+				Twilio::send_sms(array(
+					'To' => $this->teller->phone_number,
+					'Body' => "couldn't find that story" ));
 			}
 		
 		}
-		//$txt = implode(' ',$action_words);
-		//$this->send_sms( $this->post->From , "you said - {$txt}" );
+
 	}
 	
 	private function handle_latest(){
@@ -145,7 +146,9 @@ class Controller_sms extends Controller_Twilio {
 				
 				$story_parts = implode( ' ', $story_parts );
 				
-				$this->send_sms( $this->teller->phone_number , "{$story_parts}" );					
+				Twilio::send_sms(array(
+					'To' => $this->teller->phone_number,
+					'Body' => "{$story_parts}" ));					
 			}
 		}
 	}
@@ -158,7 +161,9 @@ class Controller_sms extends Controller_Twilio {
 		if( $story->loaded() ){
 		
 			if( (bool) $story->locked ){
-				$this->send_sms( $this->teller->phone_number , "Sorry this story has been finished." );
+				Twilio::send_sms(array(
+					'To' => $this->teller->phone_number,
+					'Body' => "Sorry this story has been finished." ));
 				return;
 			}
 			
@@ -173,9 +178,13 @@ class Controller_sms extends Controller_Twilio {
 				
 			$story->save();
 			
-			$this->send_sms( $this->teller->phone_number , "you like totally added to that story dude. Now find another story and add to it!" );
+			Twilio::send_sms(array(
+					'To' => $this->teller->phone_number,
+					'Body' => "you like totally added to that story dude. Now find another story and add to it!" ) );
 		}else{
-			$this->send_sms( $this->teller->phone_number , "You aren't assigned to a story, call this number for details." );
+			Twilio::send_sms(array(
+					'To' => $this->teller->phone_number,
+					'Body' => "You aren't assigned to a story, call this number for details." ) );
 		}
 
 	}
