@@ -416,3 +416,18 @@ body{
 }
 
 /* @end */
+.story p > span{
+	background-color: #fff;
+	-webkit-transition: background-color 0.2s linear;
+	-moz-transition: background-color 0.2s linear;
+	transition: background-color 0.2s linear;
+	
+}
+.story:hover p > span{
+	background-color: #f1f1f1;
+/* 	border: 1px solid #dfdfdf; */
+	
+}
+.story p > span:hover{
+	background-color: #c7c7c7;
+}
