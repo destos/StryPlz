@@ -120,10 +120,16 @@ Route::set('twilio-sms', 'sms(:<action>)')
 		'action'     => 'index',
 	));
 
-Route::set('story', 'story-(<id>)(<slug>)(/<extra>)', array('id' => '[\d]+', 'slug' => '[a-zA-Z0-9]+'))
+Route::set('story', '<access>/(<id>)(<slug>)(/<extra>)',
+	array(
+		'id' => '[\d]+',
+		'slug' => '[a-zA-Z0-9]+',
+		'access' => '(story|s)' // a shorter url option.
+	))
 	->defaults(array(
+		'access' => 'story',
 		'controller' => 'story',
-		'action'     => 'single',
+		'action'     => 'single'
 	));
 
 Route::set('stories', 'stories(/page:<page>)', array('page' => '[\d]+'))
