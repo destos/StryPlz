@@ -21,7 +21,7 @@
 		<h2>Keep in Contact</h2>
 		<ul>
 			<li><a href="http://eepurl.com/b4I3j" target="_blank">Signup for the newsletter to receive updates on new features!</a></li>
-			<li><a href="mailto:patrick+stryplz@forringer.com?subject=StryPlz">Send me an email if you have any suggestions or problems.</a></li>
+			<li><?php echo HTML::mailto('patrick+stryplz@forringer.com?subject=StryPlz', 'Send me an email if you have any suggestions or problems.')?></li>
 		</ul>
 	</div>
 	

@@ -2,7 +2,6 @@
 //$default_route = Route::get('default');
 $account_route = Route::get('default');
 
-/*
 if( Auth::instance()->logged_in() ){
 
 	$my_profile = Auth::instance()->get_user();
@@ -22,9 +21,10 @@ if( Auth::instance()->logged_in() ){
 	// show number of messages.
 	
 }else{
-*/
+
 	echo '<li>'.HTML::anchor( $account_route->uri( array( 'action' => 'signin' ) ), __('sign in') ).'</li>';
 	
 	echo '<li>'.HTML::anchor( $account_route->uri( array( 'action' => 'register' ) ), __('register') ).'</li>';
-/* } */
+	
+}
 ?>

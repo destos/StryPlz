@@ -78,4 +78,17 @@ class Model_Story extends ORM {
 		return (string) $this->full_story();
 	}
 	
+	// --------------------------------------------------------
+	// 
+	//
+	
+	public function get_link(){
+	
+		if( $this->empty_pk() )
+			return false;
+		
+		// get short route.			
+		return URL::site( Route::get('story')->uri( array( 'access' => 's', 'slug' => $this->__get('slug') ) ), true );
+	}
+	
 }

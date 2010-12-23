@@ -65,7 +65,11 @@ table {
 
 /* @end */
 html{
-	background: #abc2be url(../img/woodfloor.jpg) repeat fixed 20% center;
+	background-color: #e4bf92;
+	background-image: url(../img/top_grad.png), url(../img/woodfloor.jpg);
+	background-repeat:  repeat-x, repeat;
+	background-position:  0 -250px, 20% center;
+	background-attachment: fixed;
 }
 body{
 	color: #2c2c2c;
@@ -91,9 +95,6 @@ body{
 
 #topbar{
 	overflow: hidden;
-	background: transparent url(../img/top_grad.png) repeat-x 0 -170px;
-	height: 454px;
-	margin-bottom: -400px;
 }
 
 #topbar h1{
@@ -116,12 +117,15 @@ body{
 	float: left;
 	color: #fff;
 	text-shadow: #000000 0 1px 0;
+	width: 55%;
+	margin-bottom: 10px;
 }
+
 #topnav{
 	position: relative;
-	float: left;
-	width: 100%;
-	margin-bottom: 10px;
+	margin: 0 0 10px 0;
+	padding-top: 10px;
+	float: right;
 }
 
 #topnav > ul{
@@ -507,7 +511,9 @@ body{
 
 #directions{
 	overflow: hidden;
-	padding-top: 10px;
+	margin: 0 -10px;
+	padding: 10px;
+	border-bottom: 1px solid #d7d7d7;
 }
 
 #directions > div{
@@ -539,5 +545,71 @@ body{
 }
 
 /* @end */
+
+/* @group Mobile Styles */
+
+@media handheld, only screen and (max-width: 767px){
+
+body{
+	padding-bottom: 0;
+}
+
+#topbar .wrap{
+	padding: ;
+	padding-right: 10px;
+	padding-left: 10px;
+	min-height: 45px;
+}
+#directions{
+
+}
+#directions > div{
+	float: none;
+	width: auto;
+	margin-bottom: 15px;
+	margin-right: 0;
+}
+#footer{
+	position: static;
+	display: block;
+	height: auto;
+	overflow: hidden;
+	text-align: center;
+	padding: 10px 0;
+}
+
+#footer .copyright,
+#footer .powered{
+	float: none;
+	line-height: 2em;
+	height: auto;
+}
+
+div#main.wrap{
+	padding: 0;
+	background: none;
+}
+
+/*no rounded corners*/
+div#main.wrap,
+#content{
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
+.wrap{
+	width: auto;
+	margin: 0;
+}
+
+}
+
+div.kohana{
+	display: none;
+}
+
+/* @end */
+
 
 

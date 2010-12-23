@@ -82,7 +82,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 		
 		$this->twilio->send_sms( array(
 			'To' => $this->teller->phone_number,
-			'Body' => "Success! Tell your friends to txt us with 'join {$story->pk()}' to continue your story! Your story has {$sms_turns} turns" ));
+			'Body' => "Success! Add to it with 'join {$story->pk()}' | {$sms_turns} turns | follow its progress at {$story->get_link()} or by txting 'latest {$story->pk()}'" ));
 	}
 	
 	// TODO seperate add command that doesn't resend current story.
@@ -129,7 +129,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 					'To' => $this->teller->phone_number,
 					'Body' => "couldn't find that story" ));
 			}
-		
+			//Sorry, someone else is currently adding to this story, please wait for them to finish.
 		}
 
 	}
@@ -174,9 +174,11 @@ class Controller_Handle_Sms extends Controller_Twilio {
 				
 			$story->save();
 			
+			$story_link = $story->get_link();
+			
 			$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
-					'Body' => "you like totally added to that story dude. Now find another story and add to it!" ) );
+					'Body' => "you like totally added to that story dude. Follow its progress at {$story_link} " ) );
 		}else{
 		
 			$this->twilio->send_sms(array(

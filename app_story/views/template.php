@@ -15,10 +15,12 @@ if (!empty($scripts))
 echo asset::javascripts($scripts); ?>
 
 	<link rel="shortcut icon" href="<?php echo URL::base()?>favicon.ico" />
+	
+	<meta name="viewport" content="width=device-width; initial-scale=1.0">
+	
 <?php if(!empty($feed_link))
 echo '<link rel="alternate" type="application/rss+xml" title="'.ucfirst( $type ).' Listing Feed" href="'.$feed_link.'" />'
 ?>
-	
 </head>
 <body>
 
@@ -34,9 +36,9 @@ echo '<link rel="alternate" type="application/rss+xml" title="'.ucfirst( $type )
 			array('title'=> __('go home') ) );
 			
 		?></h1>
-		<p>StryPlz is a collaborative story creation service that works through text messages.</p>
+		<p>a collaborative story creation service that works through text messages.</p>
 		
-<?php // echo View::factory('nav/top'); ?>
+<?php echo View::factory('nav/top'); ?>
 			
 	</div>
 </div>

@@ -1,4 +1,5 @@
-<li><a href="#">Nothing</a></li>
-<li><a href="#">Tastes</a></li>
-<li><a href="#">Better</a></li>
-<li><a href="#">Than</a></li>
+<?php $story_route = Route::get('stories');
+
+echo '<li>'.HTML::anchor( $story_route->uri(), __('Stories') ).'</li>';
+
+?>

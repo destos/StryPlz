@@ -49,7 +49,9 @@ class Controller_Testing extends Controller_Twilio {
 		
 		//$story = ;
 		
-		echo (string) ORM::factory( 'story', 3 );
+		echo (string) $story = ORM::factory( 'story', 3 );
+		
+		echo $story->get_link();
 		
 		$this->auto_respond = false;
 	}

@@ -30,7 +30,8 @@ class Controller_Story extends Controller_Layout {
 		// load view and bind vars.
 		$this->template->content = View::factory('story/list')
 			->bind('stories', $stories)
-			->bind('pagination', $pagination);
+			->bind('pagination', $pagination)
+			->bind('front_page', $front_page);
 		
 		// load story orm
 		$stories = ORM::factory('story');
@@ -42,14 +43,17 @@ class Controller_Story extends Controller_Layout {
 		$pagination_obj = Pagination::factory(array(
   		'total_items'    => $count,
   		'items_per_page' => 10,
+  		'view' => 'pagination/nextprev',
   	));
-  	
+  	  	
   	// load our story set
 		$stories = $stories->order_by('id','DESC')
   			->limit($pagination_obj->items_per_page)
   			->offset($pagination_obj->offset)->find_all();
 		
 		$pagination = $pagination_obj->render();
+		
+		$front_page = (bool) ( $pagination_obj->current_page === 1 );
 				
 		$this->template->title = __('Stories : page :page', array(':page'=> $pagination_obj->current_page));
 		

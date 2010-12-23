@@ -5,7 +5,7 @@ unset( $prep_json['curr_teller'] );
 
 		<div class="story" id="story-<?php echo $story->id?>" data-info='<?php echo json_encode($prep_json) ?>'>
 			
-			<div class="info-bar"><?php echo HTML::anchor( Route::get('story')->uri(array( 'slug' => $story->slug )), 'link' ); ?></div>
+			<div class="info-bar"><?php echo HTML::anchor( Route::get('story')->uri(array( 'slug' => $story->slug )), 'permalink' ); ?></div>
 			
 			<p><?php
 			
