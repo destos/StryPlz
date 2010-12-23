@@ -34,6 +34,7 @@ echo '<link rel="alternate" type="application/rss+xml" title="'.ucfirst( $type )
 			array('title'=> __('go home') ) );
 			
 		?></h1>
+		<p>StryPlz is a collaborative story creation service that works through text messages.</p>
 		
 <?php // echo View::factory('nav/top'); ?>
 			

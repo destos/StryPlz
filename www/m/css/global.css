@@ -91,23 +91,39 @@ body{
 
 #topbar{
 	overflow: hidden;
-	/*remove top gradient to give the site a lighter feel.
-	background: transparent url(../img/top_grad.png) repeat-x;
-	height: 500px;
-	margin-bottom: -400px;*/
+	background: transparent url(../img/top_grad.png) repeat-x 0 -170px;
+	height: 454px;
+	margin-bottom: -400px;
 }
 
 #topbar h1{
-	height: 30px;
-	visibility: hidden;
+	float: left;
+	padding-top: 20px;
+	margin-left: 10px;
+	font-weight: normal;
 }
 
+#topbar h1 a{
+	float: left;
+	margin-right: 20px;
+	text-decoration: none;
+	color: #fff;
+	text-shadow: #000000 0 1px 0;
+}
+
+#topbar p{
+	margin-top: 24px;
+	float: left;
+	color: #fff;
+	text-shadow: #000000 0 1px 0;
+}
 #topnav{
 	position: relative;
 	float: left;
 	width: 100%;
 	margin-bottom: 10px;
 }
+
 #topnav > ul{
 	padding: 3px;
 	margin: 0 -3px;
@@ -420,6 +436,7 @@ body{
 /* @group Story */
 
 .story{
+	clear: both;
 	margin: 0 -10px;
 	padding: 9px;
 	border-bottom: 1px solid #d7d7d7;
@@ -485,3 +502,42 @@ body{
 
 
 /* @end */
+
+/* @group Directions */
+
+#directions{
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+#directions > div{
+	float: left;
+	width: 31%;
+	margin-right: 2%;
+}
+#directions > div:target{
+	background: #f4f4f4;
+}
+
+#directions > div h2{
+	margin-bottom: 10px;
+	text-align: center;
+}
+#directions ul,
+.direction ol{
+	list-style-type: decimal;
+	list-style-position: outside;
+	padding-left: 1.5em;
+}
+
+#directions li{
+	margin: 5px 0;
+}
+
+#directions ul{
+	list-style-type: none;
+}
+
+/* @end */
+
+
