@@ -5,6 +5,11 @@ class Controller_Main extends Controller_Layout {
 	//public function before(){}
 	
 	public function action_index(){
+		
+	  Request::instance()->redirect( Route::get('stories')->uri() );
+		
+		return;
+		
 		$this->template->title = __('Home');
 		
 		// request stories route and send.
