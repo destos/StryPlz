@@ -13,7 +13,8 @@ unset( $prep_json['curr_teller'] );
 			foreach( $story->get_parts() as $part ){
 				$prep_json = $part->as_array();
 				
-				$out = '';
+				/*
+$out = '';
 				
 				foreach( Date::span( $prep_json['added'], null, 'years,months,weeks,days,hours,minutes,seconds' ) as $ts => $t ){
 					if( !empty($t) )
@@ -21,7 +22,10 @@ unset( $prep_json['curr_teller'] );
 				}
 				
 				$prep_json['relative'] = $out;
-				//$prep_json['relative'] = Date::fuzzy_span( $prep_json['added'] );
+*/
+				
+				$prep_json['relative'] = Date::fuzzy_span( $prep_json['added'] );
+				
 				unset( $prep_json['text'], $prep_json['SmsSid'] );
 				
 				?><span data-info='<?php echo json_encode($prep_json) ?>' ><?php echo $part ?></span> <?php

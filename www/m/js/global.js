@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
 			var $cur_part = $dots.eq(part_index);
 			var part_info = $parts.eq(part_index).data('info');
 			
-			$cur_part.addClass('has_part').attr({ 'data-tip': "added "+part_info.relative+" ago" , 'data-tip-grav': 'sw'})
+			$cur_part.addClass('has_part').attr({ 'data-tip': "added "+part_info.relative , 'data-tip-grav': 'sw'})
 			.hover(function(){
 				$parts.eq(part_index).addClass('hov');
 			},function(){
