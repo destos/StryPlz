@@ -53,4 +53,12 @@ class Controller_Testing extends Controller_Twilio {
 		
 		$this->auto_respond = false;
 	}
+	
+	public function action_text(){
+		echo $text = Text::limit_chars_left( "lots of people and makes can participate in creating stories! I know! It's pretty cool, and stuff. I would like to let everyone know that others may be watching. Very closely... Tarestrial flight", 160, '...', false );
+		
+		echo strlen( $text );
+		
+		$this->auto_respond = false;
+	}
 }
