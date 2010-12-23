@@ -21,7 +21,7 @@ class Controller_Story extends Controller_Layout {
 			return;
 		}
 		
-		$this->template->content = $story;
+		$this->template->content = View::factory('story/single')->set('story',$story);
 		
 	}
 	

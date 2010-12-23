@@ -422,7 +422,7 @@ body{
 .story{
 	margin: 0 -10px;
 	padding: 9px;
-	border-top: 1px solid #d7d7d7;
+	border-bottom: 1px solid #d7d7d7;
 }
 
 .story a{
@@ -430,10 +430,40 @@ body{
 	margin-left: 10px;
 }
 
+/* @group Info Bar */
+
 .story .info-bar{
-	float: right;
-	margin-left: 20px;
+	
 }
+
+.story .info-bar a{
+	float: right;
+}
+
+.story .info-bar ul{
+	height: 14px;
+	margin-bottom: 4px;
+}
+
+.story .info-bar ul li{
+	float: left;
+	height: 14px;
+	width: 14px;
+	background: url(../img/dots.png) no-repeat left bottom;
+	overflow: hidden;
+	text-indent: -40em;
+}
+
+.story .info-bar ul li.has_part{
+	background-position: left top;
+	cursor: pointer;
+}
+
+.story .info-bar ul li.has_part:hover{
+	background-position: left center;
+}
+
+/* @end */
 
 .story p > span{
 	background-color: #fff;
@@ -444,9 +474,10 @@ body{
 }
 .story:hover p > span{
 	background-color: #f1f1f1;
-/* 	border: 1px solid #dfdfdf; */
+ 	border-bottom: 1px solid #dfdfdf; 
 	
 }
+.story p > span.hov,
 .story p > span:hover{
 	background-color: #c7c7c7;
 }

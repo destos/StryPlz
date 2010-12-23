@@ -84,6 +84,11 @@ class Controller_Handle_Sms extends Controller_Twilio {
 			'Body' => "Success! Tell your friends to txt us with 'join {$story->pk()}' to continue your story! Your story has {$sms_turns} turns" ));
 	}
 	
+	// TODO seperate add command that doesn't resend current story.
+	private function handle_add(){
+	
+	}
+	
 	private function handle_join(){
 	
 		if( is_numeric($this->sms->id) ){
@@ -114,8 +119,6 @@ class Controller_Handle_Sms extends Controller_Twilio {
 					Kohana::$log->add( Kohana::DEBUG, "Story already has a current teller {$cur_teller}" );
 				}
 				
-				//$full_story = $story->full_story();
-				
 				Twilio::send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "{$story}" ));					
@@ -134,21 +137,13 @@ class Controller_Handle_Sms extends Controller_Twilio {
 	
 		if( $this->sms->id ){
 		
-			$story = ORM::factory('story', $this->sms->id ); //->find()
+			$story = ORM::factory('story', $this->sms->id );
 			
 			if($story->loaded()){
-			
-				$parts = $story->parts->order_by('id','ASC')->find_all();
-				
-				foreach( $parts as $part ){
-					$story_parts[] = trim($part->text);
-				}
-				
-				$story_parts = implode( ' ', $story_parts );
-				
+								
 				Twilio::send_sms(array(
 					'To' => $this->teller->phone_number,
-					'Body' => "{$story_parts}" ));					
+					'Body' => "{$story}" ));					
 			}
 		}
 	}
@@ -172,7 +167,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 			$story->cur_teller = NULL;
 			$story->cur_turn += 1;
 			
-			// lock 
+			// lock story when last teller posts part.
 			if( $story->cur_turn >= $story->turns )
 				$story->locked = true;
 				
@@ -182,6 +177,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 					'To' => $this->teller->phone_number,
 					'Body' => "you like totally added to that story dude. Now find another story and add to it!" ) );
 		}else{
+		
 			Twilio::send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "You aren't assigned to a story, call this number for details." ) );

@@ -35,7 +35,7 @@ echo '<link rel="alternate" type="application/rss+xml" title="'.ucfirst( $type )
 			
 		?></h1>
 		
-<?php echo View::factory('nav/top'); ?>
+<?php // echo View::factory('nav/top'); ?>
 			
 	</div>
 </div>
