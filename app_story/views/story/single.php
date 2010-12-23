@@ -15,7 +15,7 @@ unset( $prep_json['curr_teller'] );
 				
 				$out = '';
 				
-				foreach( Date::span( $prep_json['added'], null, 'years,months,weeks,days,hours,minutes' ) as $ts => $t ){
+				foreach( Date::span( $prep_json['added'], null, 'years,months,weeks,days,hours,minutes,seconds' ) as $ts => $t ){
 					if( !empty($t) )
 					$out .= $t.' '.$ts.' ';
 				}
