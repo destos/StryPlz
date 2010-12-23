@@ -9,6 +9,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 	public function before(){
 	
 		$this->sms = (object) array('id' => false, 'txt' => false, 'full_txt' => false );
+		$this->twilio = Twilio::instance();
 		
 		return parent::before();
 	}
@@ -79,7 +80,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 		
 		$story = $this->teller->add_story( $this->sms->txt, $sms_turns, $this->post );
 		
-		Twilio::send_sms( array(
+		$this->twilio->send_sms( array(
 			'To' => $this->teller->phone_number,
 			'Body' => "Success! Tell your friends to txt us with 'join {$story->pk()}' to continue your story! Your story has {$sms_turns} turns" ));
 	}
@@ -119,12 +120,12 @@ class Controller_Handle_Sms extends Controller_Twilio {
 					Kohana::$log->add( Kohana::DEBUG, "Story already has a current teller {$cur_teller}" );
 				}
 				
-				Twilio::send_sms(array(
+				$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "{$story}" ));					
 				
 			}else{
-				Twilio::send_sms(array(
+				$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "couldn't find that story" ));
 			}
@@ -141,7 +142,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 			
 			if($story->loaded()){
 								
-				Twilio::send_sms(array(
+				$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "{$story}" ));					
 			}
@@ -156,7 +157,7 @@ class Controller_Handle_Sms extends Controller_Twilio {
 		if( $story->loaded() ){
 		
 			if( (bool) $story->locked ){
-				Twilio::send_sms(array(
+				$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "Sorry this story has been finished." ));
 				return;
@@ -173,12 +174,12 @@ class Controller_Handle_Sms extends Controller_Twilio {
 				
 			$story->save();
 			
-			Twilio::send_sms(array(
+			$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "you like totally added to that story dude. Now find another story and add to it!" ) );
 		}else{
 		
-			Twilio::send_sms(array(
+			$this->twilio->send_sms(array(
 					'To' => $this->teller->phone_number,
 					'Body' => "You aren't assigned to a story, call this number for details." ) );
 		}
